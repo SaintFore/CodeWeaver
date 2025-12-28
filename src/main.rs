@@ -21,19 +21,47 @@ fn main() {
 
 fn process_dir(path: &Path) {
     let entries = fs::read_dir(path).expect("failed to read directory");
-    for entry in entries.flatten() {
-        let path = entry.path();
-        if path.is_dir() {
-            process_dir(&path);
-        } else if path.is_file() {
-            process_file(&path);
-        }
-    }
+    // for entry in entries.flatten() {
+    //     let path = entry.path();
+    //     let file_name = path.file_name().and_then(|n| n.to_str()).unwrap_or("");
+    //     if file_name.starts_with('.') || file_name == "target" {
+    //         continue; // Skip hidden files and directories
+    //     }
+    //     if path.is_dir() {
+    //         process_dir(&path);
+    //     } else if path.is_file() {
+    //         process_file(&path);
+    //     }
+    // }
+    entries
+        .flatten()
+        .filter(|entry| {
+            let path = entry.path();
+            let file_name = path.file_name().and_then(|n| n.to_str()).unwrap_or("");
+            !file_name.starts_with(".") && file_name != "target"
+        })
+        .for_each(|entry| {
+            let path = entry.path();
+            if path.is_file() {
+                process_file(&path);
+            } else if path.is_dir() {
+                process_dir(&path);
+            }
+        });
 }
 
 fn process_file(path: &Path) {
-    let content = fs::read_to_string(path).expect("failed to read file");
-
-    println!("// {}", path.display());
-    println!("{}\n", content);
+    // let content = fs::read_to_string(path).expect("failed to read file");
+    //
+    // println!("// {}", path.display());
+    // println!("{}\n", content);
+    match fs::read_to_string(path) {
+        Ok(content) => {
+            println!("// {}", path.display());
+            println!("{}\n", content);
+        }
+        Err(e) => {
+            eprintln!("无法读取文件 {}: {}", path.display(), e);
+        }
+    }
 }
