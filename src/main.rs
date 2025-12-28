@@ -11,7 +11,7 @@ fn main() {
     let path_str = &args[1];
     let path = Path::new(path_str);
     if path.is_dir() {
-        println!("Found dir: {}", path.display());
+        process_dir(path);
     } else if path.is_file() {
         process_file(path);
     } else {
@@ -19,8 +19,20 @@ fn main() {
     }
 }
 
+fn process_dir(path: &Path) {
+    let entries = fs::read_dir(path).expect("failed to read directory");
+    for entry in entries.flatten() {
+        let path = entry.path();
+        if path.is_dir() {
+            process_dir(&path);
+        } else if path.is_file() {
+            process_file(&path);
+        }
+    }
+}
+
 fn process_file(path: &Path) {
-    let content = fs::read_to_string(path).expect("read the file");
+    let content = fs::read_to_string(path).expect("failed to read file");
 
     println!("// {}", path.display());
     println!("{}\n", content);
