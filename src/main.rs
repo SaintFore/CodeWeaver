@@ -33,12 +33,22 @@ fn process_dir(path: &Path) {
     //         process_file(&path);
     //     }
     // }
+    let allowed_exts = [
+        "rs", "py", "c", "cpp", "java", "go", "js", "ts", "tsx", "css", "html", "md", "txt", "json",
+    ];
     entries
         .flatten()
         .filter(|entry| {
             let path = entry.path();
             let file_name = path.file_name().and_then(|n| n.to_str()).unwrap_or("");
-            !file_name.starts_with(".") && file_name != "target"
+            if file_name.starts_with(".") && file_name != "target" {
+                return false;
+            }
+            if path.is_dir() {
+                return true;
+            }
+            let ext = path.extension().and_then(|s| s.to_str()).unwrap_or("");
+            allowed_exts.contains(&ext)
         })
         .for_each(|entry| {
             let path = entry.path();
