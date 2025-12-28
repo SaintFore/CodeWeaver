@@ -1,9 +1,12 @@
-name: CI
+name: RELEASE
 
 on:
   push:
     tags:
       - "v*"
+
+permissions:
+  contents: write
 
 jobs:
   rust:
