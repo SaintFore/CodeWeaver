@@ -41,7 +41,7 @@ fn process_dir(path: &Path) {
         .filter(|entry| {
             let path = entry.path();
             let file_name = path.file_name().and_then(|n| n.to_str()).unwrap_or("");
-            if file_name.starts_with(".") || file_name != "target" {
+            if file_name.starts_with(".") || file_name == "target" {
                 return false;
             }
             if path.is_dir() {
