@@ -1,6 +1,6 @@
 pkgname=code-weaver
 _reponame=CodeWeaver
-pkgver=0.1.5
+pkgver=0.1.6
 pkgrel=1
 pkgdesc="A tool to weave context for AI"
 arch=("x86_64")
