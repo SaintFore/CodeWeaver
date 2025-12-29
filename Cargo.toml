@@ -1,6 +1,7 @@
 [package]
-name = "code_weaver"
+name = "code-weaver"
 version = "0.1.0"
 edition = "2024"
+license = "MIT"
 
 [dependencies]
