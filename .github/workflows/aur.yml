@@ -1,9 +1,11 @@
 name: Deploy to AUR
 
 on:
-  release:
+  workflow_run:
+    workflows:
+      - Release
     types:
-      - published
+      - completed
   workflow_dispatch:
 
 jobs:

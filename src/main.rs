@@ -8,14 +8,15 @@ fn main() {
         eprintln!("请提供一个路径作为参数。");
         return;
     }
-    let path_str = &args[1];
-    let path = Path::new(path_str);
-    if path.is_dir() {
-        process_dir(path);
-    } else if path.is_file() {
-        process_file(path);
-    } else {
-        eprintln!("提供的路径无效: {}", path.display());
+    for path_str in &args[1..] {
+        let path = Path::new(path_str);
+        if path.is_dir() {
+            process_dir(path);
+        } else if path.is_file() {
+            process_file(path);
+        } else {
+            eprintln!("提供的路径无效: {}", path.display());
+        }
     }
 }
 
