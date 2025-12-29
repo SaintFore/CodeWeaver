@@ -1,4 +1,4 @@
-name: RELEASE
+name: Release
 
 on:
   push:
@@ -22,4 +22,4 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          files: target/release/code_weaver
+          files: target/release/code-weaver

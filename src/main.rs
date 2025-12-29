@@ -34,7 +34,8 @@ fn process_dir(path: &Path) {
     //     }
     // }
     let allowed_exts = [
-        "rs", "py", "c", "cpp", "java", "go", "js", "ts", "tsx", "css", "html", "md", "txt", "json",
+        "rs", "py", "c", "cpp", "java", "go", "js", "ts", "tsx", "css", "html", "md", "txt",
+        "json", "yml", "toml", "yaml",
     ];
     entries
         .flatten()
